@@ -1,6 +1,6 @@
 {
   "name": "wagon",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Wagon is a simple event bus for NodeJS microservices using amp",
   "author": {
     "name": "Jonathan Brumley",
