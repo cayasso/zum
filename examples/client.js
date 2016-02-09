@@ -1,4 +1,6 @@
-var wagon = require('../');
+require('babel-core/register');
+
+var wagon = require('../lib/index');
 var bus = wagon();
 
 bus = bus.connect();
@@ -10,4 +12,4 @@ setInterval(function (){
   bus.send('GA::10::12345::started', data, function () {
     console.log('CALLED', arguments);
   });
-}, 3000);
+}, 1000);
