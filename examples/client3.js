@@ -1,7 +1,7 @@
 require('babel-core/register');
 
-var wagon = require('../lib/index');
-var bus = wagon();
+var zum = require('../lib/index');
+var bus = zum();
 
 bus = bus.connect();
 
