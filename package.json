@@ -1,6 +1,6 @@
 {
   "name": "zum",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Zum is a simple event bus for NodeJS microservices using amp.",
   "author": {
     "name": "Jonathan Brumley",
