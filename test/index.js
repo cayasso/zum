@@ -56,7 +56,9 @@ describe('zum', function () {
       msg.should.be.eql('hi');
       done();
     });
-    client3.send('msg-lst-wild:go', 'hi');
+    setTimeout(function () {
+      client3.send('msg-lst-wild:go', 'hi');
+    }, 100)
   });
 
   it('should only handle one message (round robin)', function (done) {
@@ -89,7 +91,7 @@ describe('zum', function () {
     client1.send('msg-spcf:hola', null);
   });
 
-  it('should unlisten from an event', function (done) {
+  it('should unlisten from a topic', function (done) {
     client2.listen('msg-rm', (ac, fn) => {
       client2.unlisten('msg-rm');
       fn();
