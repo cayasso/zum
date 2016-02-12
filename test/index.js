@@ -51,12 +51,12 @@ describe('zum', function () {
   });
 
   it('should listen with wildcard', function (done) {
-    client2.listen('msg-wild:*', (ac, msg) => {
+    client2.listen('msg-lst-wild:*', (ac, msg) => {
       ac.should.be.eql('go');
       msg.should.be.eql('hi');
       done();
     });
-    client1.send('msg-wild:go', 'hi');
+    client1.send('msg-lst-wild:go', 'hi');
   });
 
   it('should only handle one message (round robin)', function (done) {
