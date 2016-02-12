@@ -6,7 +6,7 @@ var bus = zum();
 bus = bus.connect();
 
 var ids = 0;
-setInterval(function (){
+setTimeout(function (){
   var data =  { id: ids++ };
   console.log('SENDING ===>', data);
   bus.send('GA::10::12345::started', data, function () {

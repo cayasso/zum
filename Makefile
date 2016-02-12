@@ -10,8 +10,9 @@ clean:
 	rm -rf node/
 
 test:
-	@./node_modules/.bin/mocha \
+	@NODE_ENV=test ./node_modules/.bin/mocha \
 		--require babel-core/register \
+		--require should \
 		--reporter spec \
 		--recursive \
 		test
