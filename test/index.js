@@ -56,7 +56,7 @@ describe('zum', function () {
       msg.should.be.eql('hi');
       done();
     });
-    client1.send('msg-lst-wild:go', 'hi');
+    client3.send('msg-lst-wild:go', 'hi');
   });
 
   it('should only handle one message (round robin)', function (done) {
@@ -80,24 +80,24 @@ describe('zum', function () {
   });
 
   it('should handle wildcard specificity', function (done) {
-    client3.listen('msg-spfc:*:*', (ac, msg) => {
+    client3.listen('msg-spcf:*:*', (ac, msg) => {
       done('Should not handle');
     });
-    client2.listen('msg-spfc:*', (ac, msg) => {
+    client2.listen('msg-spcf:*', (ac, msg) => {
       done();
     });
-    client1.send('msg-spfc:hola', null);
+    client1.send('msg-spcf:hola', null);
   });
 
   it('should unlisten from an event', function (done) {
-    client2.listen('rm', (ac, fn) => {
-      client2.unlisten('rm');
+    client2.listen('msg-rm', (ac, fn) => {
+      client2.unlisten('msg-rm');
       fn();
     });
     client2.listen('done', done);
-    client1.send('rm', 'hi', (fn) => {
-      client1.send('rm', 'hi');
-      client1.send('rm', 'hi');
+    client1.send('msg-rm', 'hi', (fn) => {
+      client1.send('msg-rm', 'hi');
+      client1.send('msg-rm', 'hi');
       client1.send('done');
     });
   });
@@ -110,12 +110,12 @@ describe('zum', function () {
     client1.publish('msg', 'hi');
   });
 
-  it('should send objects', function (done) {
-    client2.subscribe('msg-obj', msg => {
+  it('should publish objects', function (done) {
+    client2.subscribe('msg-pub-obj', msg => {
       msg.should.be.eql({ ok: true });
       done();
     });
-    client1.publish('msg-obj', { ok: true });
+    client1.publish('msg-pub-obj', { ok: true });
   });
 
   it('should publish to all subscribers', function (done) {
@@ -129,9 +129,9 @@ describe('zum', function () {
   it('should publish to all subscribers with wildcard', function (done) {
     let n = 0;
     const finish = (ac, msg) => ( 2 <= ++n) && done();
-    client3.subscribe('msg-wild:*', finish);
-    client2.subscribe('msg-wild:*', finish);
-    client1.publish('msg-wild:hi', 'hi');
+    client3.subscribe('msg-pub-wild:*', finish);
+    client2.subscribe('msg-pub-wild:*', finish);
+    client1.publish('msg-pub-wild:hi', 'hi');
   });
 
   it('should unsubscribe from a topic', function (done) {
