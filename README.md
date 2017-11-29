@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/cayasso/zum.png?branch=master)](https://travis-ci.org/cayasso/zum)
 [![NPM version](https://badge.fury.io/js/zum.png)](http://badge.fury.io/js/zum)
 
-Wagon is a simple event bus for NodeJS microservices using [amp](https://github.com/tj/node-amp).
+zum is a simple event bus for NodeJS microservices using [amp](https://github.com/tj/node-amp).
 
 ## Instalation
 
