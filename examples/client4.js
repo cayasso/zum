@@ -1,10 +1,8 @@
-require('babel-core/register');
-
-var zum = require('../lib/index');
+var zum = require('../src/index');
 var bus = zum();
 
 bus = bus.connect();
-bus.listen('GA::10::*::*', function (seg, msg, fn) {
+bus.subscribe('HOLA', function (seg, msg, fn) {
   console.log('=====>', seg, msg);
   //fn(null, 'RECIBIDO GRACIAS [client 2]');
-});
+})

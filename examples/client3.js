@@ -1,6 +1,4 @@
-require('babel-core/register');
-
-var zum = require('../lib/index');
+var zum = require('../src/index');
 var bus = zum();
 
 bus = bus.connect();

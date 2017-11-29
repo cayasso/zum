@@ -8,8 +8,10 @@
   },
   "main": "./node/index",
   "scripts": {
-    "test": "make test",
-    "prepublish": "make"
+    "test": "xo && mocha",
+    "build": "npm run clean && ./node_modules/.bin/babel src -d lib",
+    "prepare": "npm run build",
+    "clean": "rm -rf lib/"
   },
   "repository": {
     "type": "git",
@@ -18,11 +20,9 @@
   "dependencies": {
     "amp": "^0.3.1",
     "amp-message": "^0.1.2",
-    "async": "^2.0.0-rc",
-    "babel-polyfill": "^6.9.1",
-    "debug": "^2.2.0",
-    "eventemitter3": "^1.2.0",
-    "lodash": "^4.13.1",
+    "async": "^2.6.0",
+    "debug": "^3.1.0",
+    "eventemitter3": "^2.0.3",
     "netly": "^0.1.4",
     "tries": "^0.1.0",
     "wildcard-wrapper": "^0.1.2",
@@ -42,16 +42,32 @@
     "inter"
   ],
   "devDependencies": {
-    "babel-cli": "^6.9.0",
-    "babel-core": "^6.9.1",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-stage-2": "^6.5.0",
-    "mocha": "~2.5.3",
-    "pre-commit": "^1.1.3",
-    "should": "~9.0.0"
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint-config-prettier": "^2.9.0",
+    "mocha": "~4.0.1",
+    "pre-commit": "^1.2.2",
+    "should": "~13.1.3",
+    "xo": "^0.18.2"
   },
   "pre-commit": [
     "test"
-  ]
+  ],
+  "xo": {
+    "extends": [
+      "prettier"
+    ],
+    "ignores": [
+      "test/**",
+      "examples/**"
+    ],
+    "rules": {
+      "object-curly-spacing": 0,
+      "no-unused-expressions": 0,
+      "no-negated-condition": 0,
+      "no-use-before-define": 0,
+      "new-cap": 0
+    }
+  }
 }

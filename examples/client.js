@@ -1,15 +1,11 @@
-require('babel-core/register');
-
-var zum = require('../lib/index');
+var zum = require('../src/index');
 var bus = zum();
 
 bus = bus.connect();
 
 var ids = 0;
-setTimeout(function (){
+setInterval(function (){
   var data =  { id: ids++ };
   console.log('SENDING ===>', data);
-  bus.send('GA::10::12345::started', data, function () {
-    console.log('CALLED', arguments);
-  });
-}, 1000);
+  bus.publish('HOLA', 'HOLA');
+}, 6000);

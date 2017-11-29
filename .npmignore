@@ -3,4 +3,4 @@ examples
 *.log
 tmp
 test
-lib
+src/
