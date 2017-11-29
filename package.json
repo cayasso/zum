@@ -6,7 +6,7 @@
     "name": "Jonathan Brumley",
     "email": "cayasso@gmail.com"
   },
-  "main": "./node/index",
+  "main": "./index.js",
   "scripts": {
     "test": "xo && mocha",
     "build": "npm run clean && ./node_modules/.bin/babel src -d lib",

@@ -13,7 +13,6 @@ const { encrypt, decrypt } = require('./security')
 const { HSK, SUB, UNS, PUB, ACK, HOST } = require('./constants')
 
 const debug = dbg('zum:client')
-const noop = () => {}
 const reservedEvents = {
   'reconnect failed': 1,
   'reconnecting': 1,
@@ -26,14 +25,9 @@ const reservedEvents = {
 
 const reg = new RegExp(`^${HSK}|${SUB}|${UNS}|${PUB}|${ACK}$`)
 
-module.exports = (options = {}, cb) => {
+module.exports = async (options = {}) => {
   if (typeof options === 'string') {
     options = { host: options }
-  }
-
-  if (typeof options === 'function') {
-    cb = options
-    options = {}
   }
 
   const {
@@ -87,7 +81,7 @@ module.exports = (options = {}, cb) => {
     }
   }
 
-  const handshake = () => send(HSK, events, cb)
+  const handshake = () => send(HSK, events)
   const isAck = arg => arg[0] === 105 && arg[1] === 58
   const re = retry({ retries, min: minDelay, max: maxDelay })
   const reserved = event => reg.test(event) || event in reservedEvents
@@ -219,12 +213,9 @@ module.exports = (options = {}, cb) => {
     reconnect()
   }
 
-  const connect = (fn = noop) => {
+  const connect = () => {
     const parser = new Parser()
-    sock = net.connect(host, err => {
-      if (err) return fn(err)
-      fn(null, { id, host })
-    })
+    sock = net.connect(host)
     sock.pipe(parser)
     parser.on('data', ondata)
     sock.once('error', onerror)
@@ -243,6 +234,5 @@ module.exports = (options = {}, cb) => {
     })
   }
 
-  return connect(cb)
-
+  return connect()
 }

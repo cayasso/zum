@@ -13,14 +13,9 @@ const createTopic = require('./topic')
 
 const debug = dbg('zum:server')
 
-module.exports = (options = {}, fn) => {
+module.exports = async (options = {}) => {
   if (typeof options === 'string') {
     options = { host: options }
-  }
-
-  if (typeof options === 'function') {
-    fn = options
-    options = {}
   }
 
   const wildcard = createWildcard()
@@ -28,7 +23,7 @@ module.exports = (options = {}, fn) => {
   const topics = {}
   const { host = HOST, secure = true, secret, algorithm } = options
   const emitter = new Emitter()
-  const server = net.bind(host, fn)
+  const server = net.bind(host)
   const close = fn => server.close(fn)
   const isAck = arg => arg[0] === 105 && arg[1] === 58
 

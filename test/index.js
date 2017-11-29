@@ -1,15 +1,24 @@
 process.env.NODE_ENV = 'test'
 
-import { bind, connect } from '../src/index'
-import zum from '../src/index'
+const { promisify } = require('util')
+const zum = require('../src/index')
+
+const { bind, connect } = zum
 
 const host = 'tcp://127.0.0.1:9696'
-const server = bind(host)
-const client1 = connect(host)
-const client2 = connect(host)
-const client3 = connect(host)
+let server = null
+let client1 = null
+let client2 = null
+let client3 = null
 
 describe('zum', function () {
+
+  before(async () => {
+    server = await bind(host)
+    client1 = await connect(host)
+    client2 = await connect(host)
+    client3 = await connect(host)
+  })
 
   it('should be a function', function () {
     zum.should.be.a.Function
