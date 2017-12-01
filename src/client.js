@@ -207,7 +207,6 @@ module.exports = async (options = {}) => {
   }
 
   const onerror = err => {
-    console.error(err)
     emitter.emit('error', err)
     destroy(true)
     reconnect()
@@ -215,22 +214,28 @@ module.exports = async (options = {}) => {
 
   const connect = () => {
     const parser = new Parser()
-    sock = net.connect(host)
+    sock = net.connect(host, () => {})
     sock.pipe(parser)
     parser.on('data', ondata)
     sock.once('error', onerror)
     sock.once('end', reconnect)
     sock.once('connect', onconnect)
 
-    return Object.assign(emitter, {
-      send,
-      destroy,
-      reconnect,
-      listen,
-      unlisten,
-      publish,
-      subscribe,
-      unsubscribe
+    return new Promise((resolve, reject) => {
+      emitter.once('connect', info => {
+        resolve(Object.assign(emitter, {
+          ...info,
+          send,
+          destroy,
+          reconnect,
+          listen,
+          unlisten,
+          publish,
+          subscribe,
+          unsubscribe
+        }))
+      })
+      emitter.once('error', reject)
     })
   }
 

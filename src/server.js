@@ -24,6 +24,7 @@ module.exports = async (options = {}) => {
   const { host = HOST, secure = true, secret, algorithm } = options
   const emitter = new Emitter()
   const server = net.bind(host)
+
   const close = fn => server.close(fn)
   const isAck = arg => arg[0] === 105 && arg[1] === 58
 
@@ -37,7 +38,6 @@ module.exports = async (options = {}) => {
 
   const onerror = (err) => {
     debug(err)
-    console.error(err)
     emitter.emit('error', err)
   }
 
@@ -158,5 +158,10 @@ module.exports = async (options = {}) => {
   server.on('connection', onconnect)
   server.on('error', onerror)
 
-  return Object.assign(emitter, { close })
+  return new Promise((resolve, reject) => {
+    emitter.once('listening', info => {
+      resolve(Object.assign(emitter, { close, ...info }))
+    })
+    emitter.on('error', reject)
+  })
 }

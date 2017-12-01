@@ -1,14 +1,15 @@
 const zum = require('../src/index')
 
-const bus = zum.bind()
-console.log(bus)
-bus.on('error', (err) => {
-  console.error(err)
-})
+!async function () {
+  try {
+    const bus = await zum.bind()
 
-bus.on('listening', (info) => {
-  console.log('-----------------------------------------------------')
-  console.log(' CONNECTED : ' + info.host)
-  console.log(' STARTED   : ' + new Date())
-  console.log('-----------------------------------------------------')
-})
+    console.log('-----------------------------------------------------')
+    console.log(' LISTENING : ' + bus.host)
+    console.log(' STARTED   : ' + new Date())
+    console.log('-----------------------------------------------------')
+
+  } catch(err) {
+    console.log('ERROR', err)
+  }
+}()
